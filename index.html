@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Celebrity Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     * {
       margin: 0;
@@ -13,76 +12,188 @@
     }
 
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(160deg, #0f0f0f, #1e1e2f, #2b2d42);
-      overflow: hidden;
-      color: white;
+      background: #0e0e0e;
       font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .box {
+    h1 {
+      font-size: 2.8rem;
+      color: #3b82f6;
+      margin-bottom: 40px;
+      font-weight: 600;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .gallery-item {
       position: relative;
-      width: 250px;
-      height: 375px;
-      transform-style: preserve-3d;
-      animation: animate 60s linear infinite;
+      overflow: hidden;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: transform 0.4s ease;
     }
 
-    .box:hover {
-      animation-play-state: paused;
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
     }
 
-    @keyframes animate {
-      0% {
-        transform: perspective(1200px) rotateY(0deg);
-      }
-      100% {
-        transform: perspective(1200px) rotateY(360deg);
-      }
+    .gallery-item:hover img {
+      transform: scale(1.05);
     }
 
-    .box span {
+    .caption {
       position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: #eee;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .caption {
+      opacity: 1;
+    }
+
+    .lightbox {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      transform-origin: center;
-      transform-style: preserve-3d;
-      transform: rotateY(calc(var(--i) * 40deg)) translateZ(500px);
-      -webkit-box-reflect: below 2px linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.2));
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 9999;
     }
 
-    .box span img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: 0.5s;
-      border-radius: 15px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05), 0 0 8px rgba(255, 255, 255, 0.1);
+    .lightbox.active {
+      visibility: visible;
+      opacity: 1;
     }
 
-    .box span img:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+      animation: zoomIn 0.4s ease;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .lightbox:after {
+      content: '×';
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .caption {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <span style="--i:1"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0014.jpg" /></span>
-    <span style="--i:2"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0015.jpg" /></span>
-    <span style="--i:3"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0025.jpg" /></span>
-    <span style="--i:4"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0027.jpg" /></span>
-    <span style="--i:5"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0029.jpg" /></span>
-    <span style="--i:6"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0030.jpg" /></span>
-    <span style="--i:7"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0031.jpg" /></span>
-    <span style="--i:8"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0033.jpg" /></span>
-    <span style="--i:9"><img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0034.jpg" /></span>
+
+  <h1>Celebrity Gallery</h1>
+
+  <div class="gallery">
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0014.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0014.jpg" alt="Celebrity 1">
+      <div class="caption">Celebrity 1</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0015.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0015.jpg" alt="Celebrity 2">
+      <div class="caption">Celebrity 2</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0025.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0025.jpg" alt="Celebrity 3">
+      <div class="caption">Celebrity 3</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0027.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0027.jpg" alt="Celebrity 4">
+      <div class="caption">Celebrity 4</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0029.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0029.jpg" alt="Celebrity 5">
+      <div class="caption">Celebrity 5</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0030.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0030.jpg" alt="Celebrity 6">
+      <div class="caption">Celebrity 6</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0031.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0031.jpg" alt="Celebrity 7">
+      <div class="caption">Celebrity 7</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0033.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0033.jpg" alt="Celebrity 8">
+      <div class="caption">Celebrity 8</div>
+    </div>
+    <div class="gallery-item" data-full="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0034.jpg">
+      <img src="https://raw.githubusercontent.com/GoldBoi4/celebrity/main/IMG-20250514-WA0034.jpg" alt="Celebrity 9">
+      <div class="caption">Celebrity 9</div>
+    </div>
   </div>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" alt="Preview">
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const src = item.getAttribute('data-full');
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+  </script>
+
 </body>
 </html>
